@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using HotelSite.Models;
 using HotelSite.Models.UserViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelSite.Controllers
 {
+    [Authorize(Roles ="admin")]
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

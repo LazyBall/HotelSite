@@ -1,0 +1,40 @@
+﻿@model IEnumerable<HotelSite.Models.RoleViewModels.RoleViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Список ролей</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsersInRole)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <ul>
+                    @foreach (ApplicationUser applicationUser in item.UsersInRole)
+                    {
+                        <li>@applicationUser.UserName</li>
+                    }
+                </ul>
+                @Html.ActionLink("Изменить состав роли", "EditUsersList", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
