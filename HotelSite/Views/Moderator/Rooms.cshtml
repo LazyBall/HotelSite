@@ -1,0 +1,85 @@
+﻿@model IEnumerable<HotelSite.Models.ModeratorViewModels.RoomViewModel>
+
+@{
+    ViewData["Title"] = "Rooms";
+}
+
+<h1>Список номеров</h1>
+<br />
+<p>
+    <a asp-action="CreateRoom">Создать номер</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsReady)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBusy)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsReady)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsBusy)
+            </td>
+            <td>
+                <div class="row">
+                    @Html.ActionLink("Изменить", "EditRoom", new { roomNumber = item.Number }) |
+                    @Html.ActionLink("Изменить фотографии номера", "EditRoomPhotos", new { roomNumber = item.Number }) |
+                    @Html.ActionLink("Подробнее", "RoomDetails", new { roomNumber = item.Number })
+
+                    <form asp-action="DeleteRoom">
+                        <input type="hidden" name="roomNumber" value="@item.Number" />
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#staticBackdrop">
+                            Удалить
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Удаление номера</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Вы уверены, что хотите удалить номер @item.Number?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <br />
+    <a asp-action="Index" class="btn btn-primary" role="button">Назад в главное меню</a>
+</div>

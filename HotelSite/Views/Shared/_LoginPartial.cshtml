@@ -1,37 +1,39 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <form asp-controller="Account" asp-action="LogOff" class = "navbar-right" id = "logoutForm">
+    <form asp-controller="Account" asp-action="LogOff" method="post" class = "navbar-right">
         @Html.AntiForgeryToken()
-        <ul class="nav navbar-nav ">
+        <ul class="nav navbar-nav">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @User.Identity.Name
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item">Профиль</a>
                     <a class="dropdown-item">История обращений</a>
                     <div class="dropdown-divider"></div>
                     @if (User.IsInRole("admin"))
                     {
-                        <a class="dropdown-item" asp-controller="Users" asp-action="Index">
-                            Функционал администратора
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="Index">
+                            Модуль Администратор
                         </a>
                     }
                     @if (User.IsInRole("moderator"))
                     {
-                        <a class="dropdown-item" asp-controller="Users" asp-action="Index">
-                            Функционал модератора
+                        <a class="dropdown-item" asp-controller="Moderator" asp-action="Index">
+                            Модуль Модератор
                         </a>
                     }
                     @if (User.IsInRole("manager"))
                     {
-                        <a class="dropdown-item" asp-controller="Users" asp-action="Index">
-                            Функционал менеджера
+                        <a class="dropdown-item" asp-controller="Home" asp-action="Index">
+                            Модуль Менеджер
                         </a>
                     }
                 </div>
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="nav-link">Выход</span></a></li>
+            <li>
+                <button type="submit" class="btn btn-outline-dark">Выход</button>
+            </li>
         </ul>
     </form>
 }

@@ -1,12 +1,11 @@
-﻿@model HotelSite.Models.RoleViewModels.RoleEditModel
+﻿@model HotelSite.Models.AdminViewModels.RoleEditModel
 
 @{
-    ViewData["Title"] = "EditUsersList";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "EditListOfUsers";
 }
 
 <h1>Изменить состав пользователей в роли</h1>
-
+<br />
 <hr />
 @Html.ValidationSummary() 
 @using (Html.BeginForm()) 
@@ -24,7 +23,7 @@
             else
             {
                 <tr>
-                    <td>User ID</td>
+                    <td>User</td>
                     <td>Добавить в роль</td>
                 </tr>
                 foreach (ApplicationUser user in Model.NonMembers)
@@ -71,5 +70,6 @@
 }
 
 <div>
-    <a asp-action="Index">Отмена</a>
+    <br />
+    <a asp-action="Roles">Назад к списку ролей</a>
 </div>

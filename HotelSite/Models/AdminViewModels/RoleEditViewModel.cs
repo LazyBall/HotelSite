@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace HotelSite.Models.RoleViewModels
+namespace HotelSite.Models.AdminViewModels
 {
     public class RoleEditModel
     {

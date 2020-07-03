@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HotelSite.Models.UserViewModels
+namespace HotelSite.Models.AdminViewModels
 {
     public class EditUserViewModel
     {

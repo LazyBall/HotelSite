@@ -1,0 +1,82 @@
+﻿@model HotelSite.Models.ModeratorViewModels.CreateRoomViewModel
+
+@{
+    ViewData["Title"] = "CreateRoom";
+}
+
+<h1>Создание номера</h1>
+
+<h4>Заполните поля</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateRoom" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Floor" class="control-label"></label>
+                <input asp-for="Floor" class="form-control" />
+                <span asp-validation-for="Floor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacity" class="control-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsReady" />
+                    @Html.DisplayNameFor(model => model.IsReady)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comfort" class="control-label"></label>
+                <select asp-for="Comfort" class="form-control"
+                        asp-items="@Html.GetEnumSelectList<ComfortLayer>()">
+                </select>
+                <span asp-validation-for="Comfort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photos" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Загрузка</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" asp-for="Photos" class="custom-file-input" 
+                               id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                               multiple accept="image/jpeg">
+                        <label class="custom-file-label" for="inputGroupFile01">Выбранные файлы</label>
+                    </div>
+                </div>
+                <span asp-validation-for="Photos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <br />
+    <a asp-action="Rooms">Назад к списку номеров</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

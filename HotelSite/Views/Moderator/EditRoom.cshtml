@@ -1,0 +1,86 @@
+﻿@model HotelSite.Models.ModeratorViewModels.EditRoomViewModel
+
+@{
+    ViewData["Title"] = "EditRoom";
+}
+
+<h1>Изменение гостиничного номера</h1>
+
+<h4>Гостиничный номер @Model.Number</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditRoom">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Floor" class="control-label"></label>
+                <input asp-for="Floor" class="form-control" />
+                <span asp-validation-for="Floor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacity" class="control-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsReady" /> @Html.DisplayNameFor(model => model.IsReady)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsBusy" /> @Html.DisplayNameFor(model => model.IsBusy)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comfort" class="control-label"></label>
+                <select class="form-control" asp-for="Comfort"
+                        asp-items="Model.Comfort.ToSelectList()">
+                </select>
+                <span asp-validation-for="Comfort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="OldNumber" value="@Model.OldNumber"/>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>  
+            <div class="form-group">
+                @Html.ActionLink("Изменить фотографии", "EditRoomPhotos", new { roomNumber = Model.OldNumber})
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <br />
+    <a asp-action="Rooms">К списку номеров</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    // переопределение валидации на стороне клиента
+    $.validator.methods.range = function (value, element, param) {
+        var globalizedValue = value.replace(",", ".");
+        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    }
+
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+</script>
+}

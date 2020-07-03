@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,35 +7,47 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace HotelSite.Models
 {
     [Table("Rooms")]
-    [Display(Name ="Гостиничный номер")]
+    [Display(Name = "Гостиничный номер")]
     public class Room
     {
-        [Display(Name = "Номер помещения")]
         [Key]
+        [Display(Name = "Номер")]
         public byte Number { get; set; }
 
-        [Display(Name = "Этаж")]
         [Required]
+        [Display(Name = "Этаж")]
         public byte Floor { get; set; }
 
-        [Display(Name = "Вместимость")]
         [Required]
+        [Display(Name = "Вместимость")]
         public byte Capacity { get; set; }
 
-        [Display(Name = "Цена")]
         [Required]
         [Column(TypeName = "money")]
-        [Range(0, (double)decimal.MaxValue, ErrorMessage = "Недопустимое значение")]
+        [Display(Name = "Цена за один день")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Занятость на данный момент")]
         [Required]
         [DefaultValue(false)]
+        [Display(Name = "Готов к приему посетителей")]
+        public bool IsReady { get; set; }
+
+        [Required]
+        [DefaultValue(false)]
+        [Display(Name = "Заселен")]
         public bool IsBusy { get; set; }
 
-        [Display(Name = "Комфортность")]
         [Required]
-        public ComfortLayer Comfort { get; set; }       
+        [Display(Name = "Уровень комфортности")]
+        public ComfortLayer Comfort { get; set; }
+
+        [Required]
+        [DefaultValue("")]
+        [Display(Name = "Описание")]
+        public string Description { get; set; }
+
+        [Display(Name = "Фотографии")]
+        public List<Photo> Photos { get; set; }
     }
 
     public enum ComfortLayer : byte
@@ -50,5 +63,25 @@ namespace HotelSite.Models
 
         [Display(Name = "Президентский номер")]
         Presidential
+    }
+
+    public static class ComfortLayerExtensions
+    {
+        public static IEnumerable<SelectListItem> ToSelectList(this ComfortLayer comfort)
+        {
+            List<SelectListItem> selectItems = new List<SelectListItem>
+            {
+                new SelectListItem("Эконом класс",ComfortLayer.Economy.ToString(),
+                ComfortLayer.Economy==comfort),
+                new SelectListItem("Премиум класс",ComfortLayer.Premium.ToString(),
+                ComfortLayer.Premium==comfort),
+                new SelectListItem("Люкс класс",ComfortLayer.Luxury.ToString(),
+                ComfortLayer.Luxury==comfort),
+                new SelectListItem("Президентский номер",ComfortLayer.Presidential.ToString(),
+                ComfortLayer.Presidential==comfort),
+            };
+
+            return selectItems;
+        }
     }
 }

@@ -1,0 +1,73 @@
+﻿@model HotelSite.Models.ModeratorViewModels.RoomPhotosViewModel
+
+@{
+    ViewData["Title"] = "EditPhotos";
+}
+
+<h1>Изменение фотографий номера @Model.RoomNumber</h1>
+
+<br />
+<hr />
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="RoomNumber" value="@Model.RoomNumber" />
+    <div class="panel panel-primary">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Photos)
+                    </th>
+                    <th>
+                        Отметить для удаления
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Photos.Any())
+                {
+                    <tr>
+                        <td colspan="2">
+                            Нет фотографий для этого номера
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.Photos)
+                    {
+                        <tr>
+                            <td>
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.ByteArray)" />
+                            </td>
+                            <td>
+                                <input type="checkbox" name="IdsToDelete" value="@item.Id">
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <br />
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Загрузка</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" name="PhotosToAdd" class="custom-file-input" id="inputGroupFile01"
+                       aria-describedby="inputGroupFileAddon01" multiple accept="image/jpeg">
+                <label class="custom-file-label" for="inputGroupFile01">Выберите файлы</label>
+            </div>
+        </div>
+    </div>
+    <br />
+    <input type="submit" value="Cохранить изменения" class="btn btn-primary" />
+</form>
+
+<div>
+    <br />
+    <a asp-action="Rooms">Назад к списку номеров</a>
+</div>
+

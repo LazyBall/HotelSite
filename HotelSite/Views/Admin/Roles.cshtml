@@ -1,11 +1,11 @@
-﻿@model IEnumerable<HotelSite.Models.RoleViewModels.RoleViewModel>
+﻿@model IEnumerable<HotelSite.Models.AdminViewModels.RoleViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Roles";
 }
 
 <h1>Список ролей</h1>
-
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -32,9 +32,14 @@
                         <li>@applicationUser.UserName</li>
                     }
                 </ul>
-                @Html.ActionLink("Изменить состав роли", "EditUsersList", new { id = item.Id })
+                @Html.ActionLink("Изменить состав роли", "EditListOfUsers", new { id = item.Id })
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div>
+    <br />
+    <a asp-action="Index" class="btn btn-primary" role="button">Назад в главное меню</a>
+</div>

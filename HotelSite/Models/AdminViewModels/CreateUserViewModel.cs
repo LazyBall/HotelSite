@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HotelSite.Models.UserViewModels
+namespace HotelSite.Models.AdminViewModels
 {
     public class CreateUserViewModel
     {
         [Required(ErrorMessage = "Укажите email")]
         [EmailAddress]
-        [Display(Name = "Email нового пользователя")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Укажите пароль")]
         [StringLength(maximumLength: 100, MinimumLength = 8)]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль нового пользователя")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
@@ -22,12 +22,12 @@ namespace HotelSite.Models.UserViewModels
 
         [Required(ErrorMessage = "Укажите имя")]
         [MaxLength(70)]
-        [Display(Name = "Имя нового пользователя")]
+        [Display(Name = "Имя")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Укажите фамилию")]
         [MaxLength(70)]
-        [Display(Name = "Фамилия нового пользователя")]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
     }
 }
