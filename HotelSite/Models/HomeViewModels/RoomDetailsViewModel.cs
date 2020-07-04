@@ -1,37 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace HotelSite.Models.ModeratorViewModels
+namespace HotelSite.Models.HomeViewModels
 {
-    public class EditRoomViewModel
+    public class RoomDetailsViewModel
     {
-        [ScaffoldColumn(false)]
-        public byte OldNumber { get; set; }
-
-        [Required]
         [Display(Name = "Номер")]
         public byte Number { get; set; }
 
-        [Required]
         [Display(Name = "Этаж")]
         public byte Floor { get; set; }
 
-        [Required]
         [Display(Name = "Вместимость")]
         public byte Capacity { get; set; }
 
-        [Required]
         [Display(Name = "Цена за один день")]
         public decimal Price { get; set; }
 
-        [Required]
-        [Display(Name = "Готов к приему посетителей")]
-        public bool IsReady { get; set; }
-
-        [Required]
         [Display(Name = "Уровень комфортности")]
         public ComfortLayer Comfort { get; set; }
 
         [Display(Name = "Описание")]
         public string Description { get; set; }
+
+        [Display(Name = "Фотографии")]
+        public List<Photo> Photos { get; set; }
     }
 }

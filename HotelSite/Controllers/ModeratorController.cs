@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using HotelSite.Data;
 using HotelSite.Models;
 using HotelSite.Models.ModeratorViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelSite.Controllers
 {
+    [Authorize(Roles ="moderator")]
     public class ModeratorController : Controller
     {
         private readonly ApplicationContext _applicationContext;
@@ -35,7 +37,7 @@ namespace HotelSite.Controllers
         {
             return View(this._applicationContext.Rooms.Select(
                 x => new RoomViewModel
-                { Number = x.Number, IsBusy = x.IsBusy }
+                { Number = x.Number,IsReady=x.IsReady}
                 ));
         }
 
@@ -62,7 +64,7 @@ namespace HotelSite.Controllers
                 await this._applicationContext.Rooms.AddAsync(newRoom);
                 await this._applicationContext.SaveChangesAsync();
                 await this.UploadAsync(model.Photos, model.Number);
-                RedirectToAction(nameof(Rooms));
+                return RedirectToAction(nameof(Rooms));
             }
 
             return View(model);
@@ -93,7 +95,6 @@ namespace HotelSite.Controllers
                     Capacity=room.Capacity,
                     Price=room.Price,
                     IsReady=room.IsReady,
-                    IsBusy=room.IsBusy,
                     Comfort=room.Comfort,
                     Description=room.Description
                 };
@@ -114,7 +115,6 @@ namespace HotelSite.Controllers
                     editRoom.Capacity = model.Capacity;
                     editRoom.Price = model.Price;
                     editRoom.IsReady = model.IsReady;
-                    editRoom.IsBusy = model.IsBusy;
                     editRoom.Comfort = model.Comfort;
                     editRoom.Description = model.Description;
                     this._applicationContext.Rooms.Update(editRoom);

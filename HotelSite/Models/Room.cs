@@ -43,6 +43,7 @@ namespace HotelSite.Models
 
         [Required]
         [DefaultValue("")]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Описание")]
         public string Description { get; set; }
 

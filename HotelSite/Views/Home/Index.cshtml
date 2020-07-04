@@ -1,8 +1,69 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<HotelSite.Models.HomeViewModels.RoomCardViewModel>
+
+@{ 
+    ViewData["Title"] = "Index"; 
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<br />
+<h2>Список номеров</h2>
+
+<form class="form-inline">
+    <label class="my-1 mr-2" for="dateSelect">Выберите дату заезда</label>
+    <input name="arrival" required type="date" class="form-control my-1 mr-sm-2" id="dateSelect"
+           min="@DateTime.Now.ToString("yyyy-MM-dd")"
+           max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")"
+           value="@ViewData["arrival"]" />
+
+    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">
+        Выберите уровень комфорта
+    </label>
+    @if (ViewData["comfort"] is ComfortLayer layer)
+    {
+        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                name="comfort"
+                asp-items="@layer.ToSelectList()">
+            <option value="">Не выбрано</option>
+        </select>
+    }
+    else
+    {
+         <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+                name="comfort"
+                asp-items="@Html.GetEnumSelectList<ComfortLayer>()">
+            <option selected value="">Не выбрано</option>
+        </select>
+    }
+
+    <div class="col-auto">
+        <input type="number" name="days" class="form-control"
+               placeholder="Дней"
+               min="1" max="365"
+               value="@ViewData["days"]">
+    </div>
+    <button type="submit" class="btn btn-primary my-1">Применить</button>
+</form>
+
+<hr />
+
+<div class="justify-content-around" style="display: flex; flex-wrap: wrap">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-auto">
+            <div class="card my-1 border-0" style="width: 14rem;">
+                <img src="/Pictures/hotel.svg" class="smallImg card-img-top" alt="Обложка" />
+                <div class="card-body">
+                    <h5 class="card-title">Цена: @Html.DisplayFor(model => item.Price) p.</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Номер: @item.Number</h6>
+                    <h6 class="card-subtitle mb-2 text-primary">
+                        @Html.DisplayFor(model => item.Comfort)
+                    </h6>
+                    <p class="card-text">
+                        Вместимость: @item.Capacity
+                    </p>
+                    <a class="btn btn-success" asp-action="BookARoom" asp-route-roomNumber="@item.Number">Забронировать</a>
+                    <a class="btn btn-link" asp-action="RoomDetails" asp-route-roomNumber="@item.Number">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    }
 </div>

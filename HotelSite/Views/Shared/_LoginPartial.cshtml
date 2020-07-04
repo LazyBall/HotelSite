@@ -8,8 +8,8 @@
                     @User.Identity.Name
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item">Профиль</a>
-                    <a class="dropdown-item">История обращений</a>
+                    <a class="dropdown-item" asp-controller="Manage" asp-action="Index">Профиль</a>
+                    @*<a class="dropdown-item">История обращений</a>*@
                     <div class="dropdown-divider"></div>
                     @if (User.IsInRole("admin"))
                     {
@@ -23,12 +23,12 @@
                             Модуль Модератор
                         </a>
                     }
-                    @if (User.IsInRole("manager"))
+                    @*@if (User.IsInRole("manager"))
                     {
                         <a class="dropdown-item" asp-controller="Home" asp-action="Index">
                             Модуль Менеджер
                         </a>
-                    }
+                    }*@
                 </div>
             </li>
             <li>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<HotelSite.Models.HomeViewModels.RoomCardViewModel>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+
+
+@if (Model.Any())
+{
+    <h1>Результаты поиска.</h1>
+    <hr />
+    <div class="justify-content-around" style="display: flex; flex-wrap: wrap">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-auto">
+                <div class="card my-1 border-0" style="width: 14rem;">
+                    <img src="/Pictures/hotel.svg" class="smallImg card-img-top" alt="Обложка" />
+                    <div class="card-body">
+                        <h5 class="card-title">Цена: @Html.DisplayFor(model => item.Price) p.</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Номер: @item.Number</h6>
+                        <h6 class="card-subtitle mb-2 text-primary">
+                            @Html.DisplayFor(model => item.Comfort)
+                        </h6>
+                        <p class="card-text">
+                            Вместимость: @item.Capacity
+                        </p>
+                        <a class="btn btn-success" asp-action="BookARoom" asp-route-roomNumber="@item.Number">Забронировать</a>
+                        <a class="btn btn-link" asp-action="RoomDetails" asp-route-roomNumber="@item.Number">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <h1>К сожалению, по вашему запросу ничего не было найдено.</h1>
+}
+
+<div>
+    <br />
+    <a asp-action="Index">На главную</a>
+</div>

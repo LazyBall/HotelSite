@@ -35,6 +35,7 @@ namespace HotelSite.Models
         [ForeignKey("RoomNumber")]
         public Room Room { get; set; }
 
+        [Required]
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]
